@@ -45,4 +45,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    // My added relationship code
+    public function cartItems() {
+        return $this->hasMany(CartItem::class);
+    }
 }
