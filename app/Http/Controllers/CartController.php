@@ -10,8 +10,23 @@ class CartController extends Controller
 {
     // Passes all the cart items from the DB to the cart view so we can display them
     public function index() {
+        // Get all the cart items
         $cartItems = CartItem::all();
-        return view('cart', compact('cartItems'));
+
+        // Do something with the users id to get only their cart items.
+        // $userId = auth()->user()->id;
+
+        // Filter the cartItems to where we return to the view only the currently logged in
+        // users cart items
+        $userCartItems = $cartItems->filter(function ($cartItem) {
+            return $cartItem->user_id === auth()->id();
+        });
+
+        // Lastly we can calculate the total price of the users cart
+        // and then return the view with the data.
+        $cartTotalPrice = number_format($this->calcCartTotalPrice($userCartItems), 2);
+
+        return view('cart', compact('userCartItems', 'cartTotalPrice'));
     }
     
     // Method that allows the user to add an item to their cart from the menu view
@@ -26,10 +41,7 @@ class CartController extends Controller
         // 2. Get the form data
         $menuItemId = $request->menuItemId;
         $quantity = $request->quantity;
-        // Hard coded for now just to test with a single user
-        // Later change it to the commented version below it
-        $userId = 1;
-        // $userId = auth()->id();
+        $userId = auth()->id();
 
         // 3. Find the menu item by its id so we can use its price for the cart item when we create it.
         $menuItem = MenuItem::find($menuItemId);
@@ -48,8 +60,7 @@ class CartController extends Controller
             CartItem::create([
                 'user_id' => $userId,
                 'menu_item_id' => $menuItemId,
-                'quantity' => $quantity,
-                'price' => $menuItem->price
+                'quantity' => $quantity
             ]);
         }
 
@@ -58,5 +69,34 @@ class CartController extends Controller
 
 
         // return redirect()->back()->with('success', 'Item added to cart!');
+    }
+
+    // Removes a cartItem from the CartItems DB
+    public function destroy($id) {
+        $cartItem = CartItem::findOrFail($id);
+        $cartItem->delete();
+
+        return redirect('/cart');
+    }
+
+    public function decrementQuantity($id) {
+        CartItem::findOrFail($id)->decrement('quantity');
+        return redirect('/cart');
+    }
+
+    public function incrementQuantity($id) {
+        CartItem::findOrFail($id)->increment('quantity');
+        return redirect('/cart');
+    }
+
+    private function calcCartTotalPrice($userCartItems) {
+        $totalPrice = 0;
+
+        // sum up all the cart items to find a total price
+        foreach($userCartItems as $userCartItem) {
+            $totalPrice += $userCartItem->quantity * $userCartItem->menuItem->price;
+        }
+
+        return $totalPrice;
     }
 }

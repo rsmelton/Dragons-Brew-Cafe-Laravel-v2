@@ -1,4 +1,4 @@
-<nav class="flex justify-end gap-4 w-full h-16 p-4 text-lg bg-opacity-100 sticky top-0">
+<nav {{ $attributes->merge(['class' => 'flex flex-wrap justify-end gap-4 w-full h-16 p-4 text-lg bg-opacity-100 sticky top-0']) }}>
 
     <x-nav-link :href="route('home')" :active="request()->routeIs('home')">
         Home
@@ -12,32 +12,36 @@
         Menu
     </x-nav-link>
 
-    {{-- Conditionally render the cart icon with the @auth directive if the user is logged in --}}
-    <x-nav-link :href="route('cart')" :active="request()->routeIs('cart')">
-        <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-    </x-nav-link>
+    @guest
+        <x-nav-link :href="route('register')" :active="request()->routeIs('register')">
+            Register
+        </x-nav-link>
 
-    <x-nav-link :href="route('register')" :active="request()->routeIs('register')">
-        Register
-    </x-nav-link>
+        <x-nav-link :href="route('login')" :active="request()->routeIs('login')">
+            Log in
+        </x-nav-link>
+    @endguest
 
-    <x-nav-link :href="route('login')" :active="request()->routeIs('login')">
-        Login
-    </x-nav-link>
+    @auth
 
-    <x-nav-link :href="route('logout')" :active="request()->routeIs('logout')">
-        Logout
-    </x-nav-link>
+        <x-nav-link :href="route('cart')" :active="request()->routeIs('cart')">
+            Cart
+            {{-- <i class="fa fa-shopping-cart" aria-hidden="true"></i> --}}
+        </x-nav-link>
 
-    {{-- @auth
-        <a href="/"></a>
-        <a href="/menu"></a>
-        <a href="/cart"></a>
-        <a href="/logout"></a>
-    @else
-        <a href="/"></a>
-        <a href="/menu"></a>
-        <a href="/cart"></a>
-        <a href=""></a>
-    @endauth --}}
+        <x-nav-link :href="route('profile.edit')">
+            {{ __('Profile') }}
+        </x-nav-link>
+
+        <!-- Authentication -->
+        <form method="POST" action="{{ route('logout') }}" class="flex justify-start">
+            @csrf
+
+            <x-nav-link :href="route('logout')"
+                    onclick="event.preventDefault();
+                                this.closest('form').submit();">
+                {{ __('Log Out') }}
+            </x-nav-link>
+        </form>
+    @endauth
 </nav>

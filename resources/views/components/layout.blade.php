@@ -3,6 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <title>Dragon's Brew Cafe</title>
 
@@ -25,22 +26,29 @@
     </head>
         <body>
             <div class="h-screen p-4 -z-10 bg-black bg-opacity-65">
+
                 <x-header />
+                {{-- @auth
+                    @include('layouts.navigation')
+                @else
+                    <x-header />
+                @endauth --}}
+
                 <video autoplay muted loop class="fixed top-0 left-0 min-w-full min-h-full -z-20 object-cover">
                     <source src="/dragons-brew-cafe-video-Ciu9GQmU.mp4" type="video/mp4">
                 </video>
                 <div class="overflow-auto h-[calc(100vh-5rem)] relative z-0">
                     {{ $slot }}
                 </div>
+                {{-- Flash message when the user successfully does some action --}}
+                @if (session()->has('success'))
+                    <div x-data="{ show: true }"
+                         x-init="setTimeout(() => show = false, 5000)"
+                         x-show="show"
+                         class="fixed bottom-3 right-3 rounded-xl px-8 py-4 bg-blue-500 text-white">
+                        <p>{{ session('success') }}</p>
+                    </div>
+                @endif
             </div>
-            {{-- Flash message when the user successfully does some action --}}
-            @if (session()->has('success'))
-                <div x-data="{ show: true }"
-                     x-init="setTimeout(() => show = false, 3000)"
-                     x-show="show"
-                     class="fixed bottom-3 right-3 rounded-xl px-8 py-4 bg-blue-500 text-white">
-                    <p>{{ session('success') }}</p>
-                </div>
-            @endif
         </body>
 </html>

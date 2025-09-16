@@ -13,8 +13,7 @@ class CartItem extends Model
     protected $fillable = [
         'user_id',
         'menu_item_id',
-        'quantity',
-        'price'
+        'quantity'
     ];
 
     // Relationship that tells laravel that cart items belong to a User
