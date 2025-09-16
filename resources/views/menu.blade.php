@@ -13,8 +13,14 @@
                     <img class="rounded-full w-lg" src="/images/{{ $menuItem->imageURL }}" alt="{{ $menuItem->name }}">
                     <p>{{ $menuItem->name }} - ${{ $menuItem->price }}</p>
                     <p>{{ $menuItem->description }}</p>
-                    {{-- This form sends a request to the add method in the CartController --}}
-                    <form action="{{ route('cart.add') }}" method="POST">
+
+                    <form x-data @submit.prevent="fetch('{{ route('cart.add') }}', {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRF-TOKEN': $el.querySelector('input[name=_token]').value,
+                            },
+                            body: new FormData($el)
+                        }).then(r => r.ok && console.log('Added item to the cart!'))">
                         @csrf
                         <input type="hidden" name="menuItemId" value="{{ $menuItem->id }}">
                         <input type="hidden" name="quantity" value="1">
@@ -24,6 +30,19 @@
                             </button>
                         @endauth
                     </form>
+
+                    {{-- This code currently works, but trying to make it better for the user --}}
+                    {{-- This form sends a request to the add method in the CartController --}}
+                    {{-- <form action="{{ route('cart.add') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="menuItemId" value="{{ $menuItem->id }}">
+                        <input type="hidden" name="quantity" value="1">
+                        @auth
+                            <button type="submit" class="border border-white py-2 px-8 rounded-xl hover:bg-blue-500 hover:text-white">
+                                Add to cart
+                            </button>
+                        @endauth
+                    </form> --}}
                 </div>
             @endforeach
         </div>

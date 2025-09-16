@@ -23,10 +23,10 @@
     @endguest
 
     @auth
-
         <x-nav-link :href="route('cart')" :active="request()->routeIs('cart')">
-            Cart
-            {{-- <i class="fa fa-shopping-cart" aria-hidden="true"></i> --}}
+            {{-- Cart --}}
+            <i class="fa fa-shopping-cart inline-block text-xl" aria-hidden="true"></i>
+            {{ $cartQuantity }}
         </x-nav-link>
 
         <x-nav-link :href="route('profile.edit')">

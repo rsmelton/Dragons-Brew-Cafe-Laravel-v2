@@ -2,6 +2,8 @@
 
 return [
 
+    App\Providers\ViewServiceProvider::class,
+
     /*
     |--------------------------------------------------------------------------
     | Application Name
@@ -13,7 +15,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'Dragon\'s Brew Cafe'),
 
     /*
     |--------------------------------------------------------------------------
