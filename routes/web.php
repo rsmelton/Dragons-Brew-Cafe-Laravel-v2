@@ -12,7 +12,7 @@ Route::get('/about', fn() => view('about'))->name('about');
 Route::get('/menu', [MenuController::class, 'index'])->name('menu');
 
 Route::get('/cart', [CartController::class, 'index'])->name('cart');
-Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
+Route::post('/cart', [CartController::class, 'add'])->name('cart.add');
 Route::delete('/cart/{id}', [CartController::class, 'destroy'])->name('cart.destroy');
 Route::post('/cart/{id}/increment-quantity', [CartController::class, 'incrementQuantity'])->name('cart.incrementQuantity');
 Route::post('/cart/{id}/decrement-quantity', [CartController::class, 'decrementQuantity'])->name('cart.decrementQuantity');
