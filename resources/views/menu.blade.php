@@ -7,7 +7,7 @@
         @guest
             <h2 class="text-3xl font-extrabold text-center py-16">Please register or login if you would like to order some coffee!</h2>
         @endguest
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-16">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-16">
             @foreach ($menuItems as $menuItem)
                 <div class="flex flex-col justify-center items-center gap-4 text-center">
                     <img class="rounded-full w-lg" src="/images/{{ $menuItem->imageURL }}" alt="{{ $menuItem->name }}">
