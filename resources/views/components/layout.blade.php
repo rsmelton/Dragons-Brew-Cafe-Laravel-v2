@@ -28,16 +28,11 @@
             <div class="h-screen p-4 -z-10 bg-black bg-opacity-65">
 
                 <x-header />
-                {{-- @auth
-                    @include('layouts.navigation')
-                @else
-                    <x-header />
-                @endauth --}}
 
                 <video autoplay muted loop class="fixed top-0 left-0 min-w-full min-h-full -z-20 object-cover">
                     <source src="/dragons-brew-cafe-video-Ciu9GQmU.mp4" type="video/mp4">
                 </video>
-                <div class="overflow-auto h-[calc(100vh-5rem)] relative z-0">
+                <div id="scrollable-content" class="overflow-auto h-[calc(100vh-5rem)] relative z-0">
                     {{ $slot }}
                 </div>
                 {{-- Flash message when the user successfully does some action --}}
@@ -50,5 +45,28 @@
                     </div>
                 @endif
             </div>
+            <script>
+                document.addEventListener('DOMContentLoaded', () => {
+                    const container = document.getElementById('scrollable-content');
+
+                    // Restore scroll position
+                    const savedPosition = sessionStorage.getItem('scrollPosition');
+                    sessionStorage.removeItem('scrollPosition');
+                    if (savedPosition && container) {
+                        container.scrollTop = parseInt(savedPosition);
+                        console.log('Restored scroll to:', savedPosition);
+                    }
+
+                    // Save scroll position on scroll
+                    if (container) {
+                        container.addEventListener('scroll', () => {
+                            sessionStorage.setItem('scrollPosition', container.scrollTop);
+                            console.log('Saved scroll at:', container.scrollTop);
+                        });
+                    } else {
+                        console.warn('No scrollable container found');
+                    }
+                });
+            </script>
         </body>
 </html>

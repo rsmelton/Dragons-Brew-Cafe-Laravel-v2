@@ -14,7 +14,7 @@
                     <p>{{ $menuItem->name }} - ${{ $menuItem->price }}</p>
                     <p>{{ $menuItem->description }}</p>
 
-                    <form x-data @submit.prevent="fetch('{{ route('cart.add') }}', {
+                    {{-- <form x-data @submit.prevent="fetch('{{ route('cart.add') }}', {
                             method: 'POST',
                             headers: {
                                 'X-CSRF-TOKEN': $el.querySelector('input[name=_token]').value,
@@ -29,11 +29,11 @@
                                 Add to cart
                             </button>
                         @endauth
-                    </form>
+                    </form> --}}
 
                     {{-- This code currently works, but trying to make it better for the user --}}
                     {{-- This form sends a request to the add method in the CartController --}}
-                    {{-- <form action="{{ route('cart.add') }}" method="POST">
+                    <form action="{{ route('cart.add') }}" method="POST">
                         @csrf
                         <input type="hidden" name="menuItemId" value="{{ $menuItem->id }}">
                         <input type="hidden" name="quantity" value="1">
@@ -42,7 +42,7 @@
                                 Add to cart
                             </button>
                         @endauth
-                    </form> --}}
+                    </form>
                 </div>
             @endforeach
         </div>
