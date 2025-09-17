@@ -27,13 +27,14 @@
         <body>
             <div class="h-screen p-4 -z-10 bg-black bg-opacity-65">
 
-                <x-header />
+                <x-header :cartQuantity=$cartQuantity />
 
                 <video autoplay muted loop class="fixed top-0 left-0 min-w-full min-h-full -z-20 object-cover">
                     <source src="/dragons-brew-cafe-video-Ciu9GQmU.mp4" type="video/mp4">
                 </video>
                 <div id="scrollable-content" class="overflow-auto h-[calc(100vh-5rem)] relative z-0">
-                    {{ $slot }}
+                    {{-- {{ $slot }} --}}
+                    @yield('content')
                 </div>
                 {{-- Flash message when the user successfully does some action --}}
                 @if (session()->has('success'))

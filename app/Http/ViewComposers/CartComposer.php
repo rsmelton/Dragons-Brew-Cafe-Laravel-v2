@@ -5,6 +5,8 @@ use Illuminate\View\View;
 use App\Models\CartItem;
 use Illuminate\Support\Facades\Auth;
 
+// This file is not in use anymore, need to delete eventually, but will keep for now in case. 
+
 class CartComposer
 {
     public function compose(View $view)

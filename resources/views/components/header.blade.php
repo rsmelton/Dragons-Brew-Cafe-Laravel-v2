@@ -1,3 +1,5 @@
+@props(['cartQuantity'])
+
 {{-- New attempt at the navbar, but this time we want two rows of navlinks --}}
 <nav {{ $attributes->merge(['class' => 'w-full h-16 p-2 text-lg bg-opacity-100 sticky top-0']) }}>
     <div class="flex justify-end gap-2">

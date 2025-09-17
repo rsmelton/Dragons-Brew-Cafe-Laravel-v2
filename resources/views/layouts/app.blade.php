@@ -18,9 +18,9 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-sans antialiased">
-        <div class="min-h-screen" style="background-color: #0e1d3e">
+        <div class="min-h-screen p-4" style="background-color: #0e1d3e">
             {{-- @include('layouts.navigation') --}}
-            <x-header />
+            <x-header :cartQuantity=$cartQuantity />
 
             <!-- Page Heading -->
             @isset($header)
@@ -32,7 +32,7 @@
             @endisset
 
             <!-- Page Content -->
-            <main>
+            <main id="scrollable-content" class="overflow-auto h-[calc(100vh-5rem)] relative z-0">
                 {{ $slot }}
             </main>
         </div>
