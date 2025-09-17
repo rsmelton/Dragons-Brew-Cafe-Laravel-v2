@@ -21,7 +21,7 @@
                     <img 
                         src="/images/dragons-brew-logo.png" 
                         alt="Dragon's Brew Logo"
-                        style="width: 20rem; height: auto;"
+                        style="width: 30rem; height: auto;"
                     >
                 </a>
             </div>
