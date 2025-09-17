@@ -17,6 +17,7 @@ Route::delete('/cart/{id}', [CartController::class, 'destroy'])->name('cart.dest
 Route::post('/cart/{id}/increment-quantity', [CartController::class, 'incrementQuantity'])->name('cart.incrementQuantity');
 Route::post('/cart/{id}/decrement-quantity', [CartController::class, 'decrementQuantity'])->name('cart.decrementQuantity');
 
+// Note: Need to remove this route as we don't have the need for a dashboard in this app
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
