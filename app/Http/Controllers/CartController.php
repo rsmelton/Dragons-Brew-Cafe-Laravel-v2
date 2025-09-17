@@ -13,9 +13,6 @@ class CartController extends Controller
         // Get all the cart items
         $cartItems = CartItem::all();
 
-        // Do something with the users id to get only their cart items.
-        // $userId = auth()->user()->id;
-
         // Filter the cartItems to where we return to the view only the currently logged in
         // users cart items
         $userCartItems = $cartItems->filter(function ($cartItem) {
@@ -30,7 +27,7 @@ class CartController extends Controller
     }
     
     // Method that allows the user to add an item to their cart from the menu view
-    public function add(Request $request) {
+    public function store(Request $request) {
 
         // 1. Validate form data
         $request->validate([
@@ -66,9 +63,6 @@ class CartController extends Controller
 
         // 5. Flash a success message to the user and then redirect back to the menu
         return redirect('/menu')->with('success', "Item added to cart successfully!");
-
-
-        // return redirect()->back()->with('success', 'Item added to cart!');
     }
 
     // Removes a cartItem from the CartItems DB
