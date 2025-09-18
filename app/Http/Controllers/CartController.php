@@ -85,7 +85,15 @@ class CartController extends Controller
     // instance of a cart item in a users cart, so we can directly access the cart items id
     public function incrementQuantity(Request $request) {
         CartItem::findOrFail($request->id)->increment('quantity');
-        return redirect('/cart');
+
+        // Prob need to return a response with a redirect here
+
+        return response()->json([
+            'quantity' => CartItem::where('user_id', auth()->id())->sum('quantity'),
+            'redirect' => route('cart') // or maybe '/cart'
+        ]);
+
+        // return redirect('/cart');
         // return getQuantity();
     }
 
@@ -100,8 +108,14 @@ class CartController extends Controller
             $cartItem->delete();
         }
 
-        return redirect('/cart');
+        // Prob need to return a response with a redirect here
+        return response()->json([
+            'quantity' => CartItem::where('user_id', auth()->id())->sum('quantity'),
+            'redirect' => route('cart') // or maybe '/cart'
+        ]);
 
+
+        // return redirect('/cart');
         // return getQuantity();
     }
 

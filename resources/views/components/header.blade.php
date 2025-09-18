@@ -1,6 +1,6 @@
 @props(['cartQuantity'])
-
-<nav x-data="cartQuantityComponent()" x-init="loadQuantity()" {{ $attributes->merge(['class' => 'w-full h-16 p-2 text-lg bg-opacity-100 sticky top-0']) }}>
+{{-- x-data="cartQuantityComponent()" x-init="loadQuantity()" used to be in nav tag --}}
+<nav {{ $attributes->merge(['class' => 'w-full h-16 p-2 text-lg bg-opacity-100 sticky top-0']) }}>
     <div class="flex justify-end gap-2">
         <x-nav-link :href="route('home')" :active="request()->routeIs('home')">
             Home
@@ -16,9 +16,10 @@
 
         @auth
             <x-nav-link :href="route('cart')" :active="request()->routeIs('cart')">
-                <i class="fa fa-shopping-cart inline-block text-xl" aria-hidden="true"></i>
+                <i class="fa fa-shopping-cart inline-block text-md" aria-hidden="true"></i>
                 {{-- <span x-text="quantity"></span> --}}
-                {{ $cartQuantity }}
+                <span id="cartTotalQuantity"></span>
+                {{-- {{ $cartQuantity }} --}}
             </x-nav-link>
         @endauth
     </div>
