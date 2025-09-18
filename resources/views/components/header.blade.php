@@ -17,7 +17,7 @@
 
         @auth
             <x-nav-link :href="route('cart')" :active="request()->routeIs('cart')">
-                <i class="fa fa-shopping-cart inline-block text-xl" aria-hidden="true"></i>
+                <i class="fa fa-shopping-cart inline-block text-sm" aria-hidden="true"></i>
                 {{ $cartQuantity }}
             </x-nav-link>
         @endauth
