@@ -30,32 +30,29 @@
                         @foreach ($userCartItems as $userCartItem)
                             <tr class="hover:bg-gray-50">
                                 <td class="px-6 py-4">
+                                    {{-- This will be where alpine starts --}}
+                                    {{-- Next we want to start making the requests, just without forms or maybe with forms and use @submit.prevent --}}
                                     <div class="flex flex-wrap items-center gap-2">
-                                        @if ($userCartItem->quantity === 1)
-                                            <form action="{{ route('cart.destroy', $userCartItem->id) }}" method="POST">
-                                                @csrf
-                                                @method('DELETE')
-
-                                                <button type="submit" class="bg-red-500 text-blue-800 px-2 py-1 rounded text-xs">
-                                                    <img style="width: 2.5rem; height: 2.5rem;" src="/images/trashcan-icon.png" alt="Decrease quantity from cart button">
-                                                </button>
-                                            </form>
-                                        @else
-                                            <form action="{{ route('cart.decrementQuantity', $userCartItem->id) }}" method="POST">
-                                                @csrf
-
-                                                <button type="submit" class="bg-red-400 text-blue-800 px-2 py-1 rounded text-xs">
-                                                    <img style="width: 2.5rem; height: 2.5rem;" src="/images/minus-icon.png" alt="Decrease quantity from cart button">
-                                                </button>
-                                            </form>
-                                        @endif
-                                        <span class="bg-green-100 text-green-800 px-4 py-1 rounded text-xl">
-                                            {{ $userCartItem->quantity }}
-                                        </span>
-                                        <form action="{{ route('cart.incrementQuantity', $userCartItem->id) }}" method="POST">
+                                        <form @submit.prevent="updateCart('decrement')">
                                             @csrf
 
-                                            <button type="submit" class="bg-green-400 text-blue-800 px-2 py-1 rounded text-xs">
+                                            @if ($userCartItem->quantity === 1)
+                                                 <button type="submit" class="bg-red-500 px-2 py-1 rounded">
+                                                    <img style="width: 2.5rem; height: 2.5rem;" src="/images/trashcan-icon.png" alt="Remove cart item button">
+                                                </button>
+                                            @else
+                                                <button type="submit" class="bg-red-400 px-2 py-1 rounded">
+                                                    <img style="width: 2.5rem; height: 2.5rem;" src="/images/minus-icon.png" alt="Decrease quantity from cart button">
+                                                </button>
+                                            @endif
+                                        </form>
+                                        <span x-text="quantity" class="bg-green-100 text-green-800 px-4 py-1 rounded text-xl">
+                                            {{ $userCartItem->quantity }}
+                                        </span>
+                                        <form @submit.prevent="updateCart('increment')">
+                                            @csrf
+
+                                            <button type="submit" class="bg-green-400 px-2 py-1 rounded">
                                                 <img style="width: 2.5rem; height: 2.5rem;" src="/images/plus-icon.png" alt="Increase quantity from cart button">
                                             </button>
                                         </form>

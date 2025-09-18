@@ -73,15 +73,48 @@ class CartController extends Controller
         return redirect('/cart');
     }
 
-    public function decrementQuantity($id) {
-        CartItem::findOrFail($id)->decrement('quantity');
-        return redirect('/cart');
+    // Newly added methods for dealing with the quantity in hopes
+    // that we can render the quantity without refreshing the page
+    public function getQuantity() {
+        return response()->json([
+            'quantity' => CartItem::where('user_id', auth()->id())->sum('quantity')
+        ]);
     }
 
-    public function incrementQuantity($id) {
-        CartItem::findOrFail($id)->increment('quantity');
+    // $request->id in both increment and decrement are both the current
+    // instance of a cart item in a users cart, so we can directly access the cart items id
+    public function incrementQuantity(Request $request) {
+        CartItem::findOrFail($request->id)->increment('quantity');
         return redirect('/cart');
+        // return getQuantity();
     }
+
+    public function decrementQuantity(Request $request) {
+
+        // CartItem::findOrFail($request->id)->decrement('quantity');
+
+        $cartItem = CartItem::findOrFail($request->id);
+        $cartItem->decrement('quantity');
+
+        if ($cartItem->quantity < 1) {
+            $cartItem->delete();
+        }
+
+        return redirect('/cart');
+
+        // return getQuantity();
+    }
+
+    // Old way of dec and inc quantity with annoying page refresh
+    // public function decrementQuantity($id) {
+    //     CartItem::findOrFail($id)->decrement('quantity');
+    //     return redirect('/cart');
+    // }
+
+    // public function incrementQuantity($id) {
+    //     CartItem::findOrFail($id)->increment('quantity');
+    //     return redirect('/cart');
+    // }
 
     private function calcCartTotalPrice($userCartItems) {
         $totalPrice = 0;
