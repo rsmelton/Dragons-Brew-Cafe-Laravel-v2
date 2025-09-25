@@ -28,9 +28,30 @@
                     </thead>
                     <tbody class="divide-y divide-gray-200 bg-gray-300">
                         @foreach ($userCartItems as $userCartItem)
+                            @php
+                                $userCartItemQuantity = $userCartItem->quantity;
+                            @endphp
                             <tr class="hover:bg-gray-50">
                                 <td class="px-6 py-4">
-                                    <div class="flex flex-wrap items-center gap-2">
+                                    <div x-data="userCartItem({{ $userCartItem->toJson() }})" class="flex flex-wrap items-center gap-2">
+                                        @if ($userCartItemQuantity === 1)
+                                            <button @click="decrementQuantity" class="bg-red-500 text-blue-800 px-2 py-1 rounded text-xs">
+                                                <img style="width: 2.5rem; height: 2.5rem;" src="/images/trashcan-icon.png" alt="Decrease quantity from cart button">
+                                            </button>
+                                        @else
+                                            <button @click="decrementQuantity" class="bg-red-400 text-blue-800 px-2 py-1 rounded text-xs">
+                                                <img style="width: 2.5rem; height: 2.5rem;" src="/images/minus-icon.png" alt="Decrease quantity from cart button">
+                                            </button>
+                                        @endif
+                                        <span x-text="quantity" class="bg-green-100 text-green-800 px-4 py-1 rounded text-xl"></span>
+                                        {{-- <span class="bg-green-100 text-green-800 px-4 py-1 rounded text-xl">
+                                            {{ $userCartItemQuantity }}
+                                        </span> --}}
+                                        <button @click="incrementQuantity" class="bg-green-400 text-blue-800 px-2 py-1 rounded text-xs">
+                                            <img style="width: 2.5rem; height: 2.5rem;" src="/images/plus-icon.png" alt="Increase quantity from cart button">
+                                        </button>
+                                    </div>
+                                    {{-- <div class="flex flex-wrap items-center gap-2">
                                         @if ($userCartItem->quantity === 1)
                                             <form action="{{ route('cart.destroy', $userCartItem->id) }}" method="POST">
                                                 @csrf
@@ -59,7 +80,7 @@
                                                 <img style="width: 2.5rem; height: 2.5rem;" src="/images/plus-icon.png" alt="Increase quantity from cart button">
                                             </button>
                                         </form>
-                                    </div>
+                                    </div> --}}
                                 </td>
                                 <td class="px-6 py-4 font-medium text-gray-800">{{ $userCartItem->menuItem->name }}</td>
                                 <td class="px-6 py-4 text-gray-600">${{ $userCartItem->menuItem->price }}</td>

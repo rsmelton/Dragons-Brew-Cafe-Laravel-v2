@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\CartItem;
 use App\Models\MenuItem;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class CartController extends Controller
 {
@@ -73,14 +74,42 @@ class CartController extends Controller
         return redirect('/cart');
     }
 
-    public function decrementQuantity($id) {
-        CartItem::findOrFail($id)->decrement('quantity');
-        return redirect('/cart');
+    public function getCartTotalQuantity() {
+        return CartItem::where('user_id', Auth::id())->sum('quantity');
     }
 
     public function incrementQuantity($id) {
-        CartItem::findOrFail($id)->increment('quantity');
-        return redirect('/cart');
+        $cartItem = CartItem::findOrFail($id);
+        $cartItem->increment('quantity');
+        return response()->json([
+            'quantity' => $cartItem->quantity,
+            'totalQuantity' => $this->getCartTotalQuantity(),
+            'redirect' => route('cart')
+        ]);
+
+        // return redirect('/cart');
+    }
+
+    public function decrementQuantity($id) {
+        Log::info('HIT THE CONTROLLER!');
+
+        $cartItem = CartItem::findOrFail($id);
+
+        // dd($cartItem->quantity);
+
+        if ($cartItem->quantity > 1) {
+            $cartItem->decrement('quantity');
+        } else {
+            $cartItem->delete();
+        }
+
+        return response()->json([
+            'quantity' => $cartItem->quantity,
+            'totalQuantity' => $this->getCartTotalQuantity(),
+            'redirect' => route('cart')
+        ]);
+
+        // return redirect('/cart');
     }
 
     private function calcCartTotalPrice($userCartItems) {

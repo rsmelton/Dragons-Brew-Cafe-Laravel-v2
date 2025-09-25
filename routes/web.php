@@ -14,8 +14,8 @@ Route::get('/menu', [MenuController::class, 'index'])->name('menu');
 Route::middleware('auth')->group(function () {
     Route::get('/cart', [CartController::class, 'index'])->name('cart');
     Route::post('/cart', [CartController::class, 'store'])->name('cart.add');
-    Route::post('/cart/{id}/increment-quantity', [CartController::class, 'incrementQuantity'])->name('cart.incrementQuantity');
-    Route::post('/cart/{id}/decrement-quantity', [CartController::class, 'decrementQuantity'])->name('cart.decrementQuantity');
+    Route::patch('/cart/{id}/increment', [CartController::class, 'incrementQuantity'])->name('cart.incrementQuantity');
+    Route::patch('/cart/{id}/decrement', [CartController::class, 'decrementQuantity'])->name('cart.decrementQuantity');
     Route::delete('/cart/{id}', [CartController::class, 'destroy'])->name('cart.destroy');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

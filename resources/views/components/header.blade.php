@@ -18,7 +18,8 @@
         @auth
             <x-nav-link :href="route('cart')" :active="request()->routeIs('cart')">
                 <i class="fa fa-shopping-cart inline-block text-sm" aria-hidden="true"></i>
-                {{ $cartQuantity }}
+                <span x-data x-text="$store.cart.quantity"></span>
+                {{-- {{ $cartQuantity }} --}}
             </x-nav-link>
         @endauth
     </div>

@@ -31,7 +31,7 @@
                     </form> --}}
 
                     {{-- This code currently works, but trying to make it better for the user --}}
-                    {{-- This form sends a request to the add method in the CartController --}}
+                    {{-- This form sends a request to the store method in the CartController --}}
                     <form action="{{ route('cart.add') }}" method="POST">
                         @csrf
                         <input type="hidden" name="menuItemId" value="{{ $menuItem->id }}">
