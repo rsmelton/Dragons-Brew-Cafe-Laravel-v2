@@ -20,7 +20,7 @@
     <body class="font-sans antialiased">
         <div class="min-h-screen p-4" style="background-color: #0e1d3e">
             {{-- @include('layouts.navigation') --}}
-            <x-header :cartQuantity=$cartQuantity />
+            <x-header />
 
             <!-- Page Heading -->
             {{-- @isset($header)

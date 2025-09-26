@@ -13,6 +13,16 @@
                     <p>{{ $menuItem->name }} - ${{ $menuItem->price }}</p>
                     <p>{{ $menuItem->description }}</p>
 
+                    @auth
+                        <div>
+                            <button x-data @click="$store.cart.addToCart({{ $menuItem->id }}, 1)" class="border border-white py-2 px-8 rounded-xl hover:bg-blue-500 hover:text-white">
+                                Add to cart
+                            </button>
+                        </div>
+                    @endauth
+
+                    {{-- @click="$store.cart.addToCart({{ $menuItem->id }}, 1)" --}}
+
                     {{-- <form x-data @submit.prevent="fetch('{{ route('cart.add') }}', {
                             method: 'POST',
                             headers: {
@@ -32,7 +42,7 @@
 
                     {{-- This code currently works, but trying to make it better for the user --}}
                     {{-- This form sends a request to the add method in the CartController --}}
-                    <form action="{{ route('cart.add') }}" method="POST">
+                    {{-- <form action="{{ route('cart.add') }}" method="POST">
                         @csrf
                         <input type="hidden" name="menuItemId" value="{{ $menuItem->id }}">
                         <input type="hidden" name="quantity" value="1">
@@ -41,7 +51,7 @@
                                 Add to cart
                             </button>
                         @endauth
-                    </form>
+                    </form> --}}
                 </div>
             @endforeach
         </div>

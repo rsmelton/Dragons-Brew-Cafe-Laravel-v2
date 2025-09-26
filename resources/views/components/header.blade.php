@@ -1,5 +1,3 @@
-@props(['cartQuantity'])
-
 {{-- New attempt at the navbar, but this time we want two rows of navlinks --}}
 <nav {{ $attributes->merge(['class' => 'w-full h-16 p-2 text-lg bg-opacity-100 sticky top-0']) }}>
     <div class="flex justify-end gap-2">
@@ -17,8 +15,11 @@
 
         @auth
             <x-nav-link :href="route('cart')" :active="request()->routeIs('cart')">
-                <i class="fa fa-shopping-cart inline-block text-sm" aria-hidden="true"></i>
-                {{ $cartQuantity }}
+                <div x-init="$store.cart.updateCart()">
+                    <i class="fa fa-shopping-cart inline-block text-sm" aria-hidden="true"></i>
+                    {{-- This value comes from the field in the cartHandler.js file --}}
+                    <span x-text="$store.cart.cartTotalQuantity"></span>
+                </div>
             </x-nav-link>
         @endauth
     </div>
