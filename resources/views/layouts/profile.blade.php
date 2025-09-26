@@ -19,18 +19,8 @@
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen p-4" style="background-color: #0e1d3e">
-            {{-- @include('layouts.navigation') --}}
-            <x-header />
 
-            <!-- Page Heading -->
-            {{-- @isset($header)
-                <header class="shadow">
-                    <div class="max-w-7xl py-6 sm:px-6 lg:px-8">
-                        {{ $header }}
-                    </div>
-                    <h1>{{ $header }}</h1>
-                </header>
-            @endisset --}}
+            @include('layouts.header')
 
             <!-- Page Content -->
             <main id="scrollable-content" class="overflow-auto h-[calc(100vh-5rem)] relative z-0">

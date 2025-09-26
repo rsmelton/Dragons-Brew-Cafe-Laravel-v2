@@ -17,6 +17,7 @@ class ViewServiceProvider extends ServiceProvider
         // View::composer('*', CartComposer::class);
 
         // New way that makes the query once and passes the data to the two layouts
+        // This is a static way of 
         View::composer(['layouts.layout', 'layouts.profile'], function ($view) {
             $cartQuantity = 0;
 

@@ -1,13 +1,7 @@
 <x-profile-layout>
     <div class="p-8">
-        {{-- <x-slot name="header">
-            <h2 class="font-semibold text-3xl text-white leading-tight">
-                {{ __('Profile') }}
-            </h2>
-        </x-slot> --}}
-
         <h2 class="font-semibold text-3xl text-white leading-tight">
-            Profile
+            {{ __('Profile') }}
         </h2>
     
         <div class="py-12">

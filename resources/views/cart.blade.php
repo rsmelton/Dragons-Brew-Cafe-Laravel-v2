@@ -1,4 +1,5 @@
-{{-- Anything in this file using $store is referencing a global store that is stored in Alpine --}}
+{{-- Anything in this file using $store.cart is referencing a global store that is stored in Alpine 
+which is inside my cartHandler.js file --}}
 
 @extends('layouts.layout')
 
@@ -26,8 +27,8 @@
                     <thead class="bg-gray-100 text-gray-600 uppercase text-xs">
                         <tr>
                             <th class="px-6 py-3">Change Quantity</th>
-                            <th class="px-6 py-3">Name</th>
-                            <th class="px-6 py-3">Price per coffee</th>
+                            <th class="px-6 py-3">Item Name</th>
+                            <th class="px-6 py-3">Price per item</th>
                             <th class="px-6 py-3">Quantity</th>
                             <th class="px-6 py-3 text-right">Cost</th>
                         </tr>

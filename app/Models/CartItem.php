@@ -16,9 +16,9 @@ class CartItem extends Model
         'quantity'
     ];
 
-    // Relationship that tells laravel that cart items belong to a User
-    // this is essentially just returning a relationship object to then use
-    // later if I need to find the user associated with this cart item
+    // These are the relationships that a cartItem has.
+    // You can reference them when you need to know what user
+    // a cartItem is associated with, or what menuItem it is associated with.
     public function user() {
         return $this->belongsTo(User::class);
     }

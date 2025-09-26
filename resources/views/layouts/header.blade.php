@@ -1,4 +1,4 @@
-<nav {{ $attributes->merge(['class' => 'w-full h-16 p-2 text-lg bg-opacity-100 sticky top-0']) }}>
+<nav class ="w-full h-16 p-2 text-lg bg-opacity-100 sticky top-0">
     <div class="flex justify-end gap-2">
         <x-nav-link :href="route('home')" :active="request()->routeIs('home')">
             Home
