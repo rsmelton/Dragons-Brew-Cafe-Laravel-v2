@@ -1,6 +1,5 @@
 import './bootstrap';
 import './cartHandler';
-import './scroll';
 
 import Alpine from 'alpinejs';
 

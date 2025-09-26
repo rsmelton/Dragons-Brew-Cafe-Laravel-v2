@@ -12,8 +12,9 @@ Route::get('/about', fn() => view('about'))->name('about');
 Route::get('/menu', [MenuController::class, 'index'])->name('menu');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/cart', [CartController::class, 'index'])->name('cart');
+    Route::get('/cart', fn() => view('cart'))->name('cart');
     Route::post('/cart', [CartController::class, 'store'])->name('cart.add');
+    Route::get('/cart/total-quantity', [CartController::class, 'getInitialCartTotalQuantity']);
     Route::get('/cart/update', [CartController::class, 'updateCart'])->name('cart.update');
     // Route::get('/cart/quantity', [CartController::class, 'getQuantity'])->name('cart.getQuantity');
     Route::patch('/cart/{id}/increment-quantity', [CartController::class, 'incrementQuantity'])->name('cart.incrementQuantity');

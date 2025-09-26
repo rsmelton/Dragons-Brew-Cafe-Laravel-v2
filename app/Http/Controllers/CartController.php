@@ -8,19 +8,17 @@ use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
-    // Passes the number of items in the cart and the total price of that cart back to the cart view
-    public function index() {
-
+    // This method simply finds and returns the total quantity of all the items in the users cart -- we run this instead of updateCart because we don't
+    // need all the other data that comes with it. In this case we only need the initial total quantity of the cart.
+    public function getInitialCartTotalQuantity() {
         // Get all the users cart items so we can figure out how many there are
         $userCartItems = CartItem::where('user_id', auth()->id())->get();
 
-        // Calculate the total price of the users cart
-        $cartTotalPrice = number_format($this->calcCartTotalPrice($userCartItems), 2);
+        // Sum up all the items in the users cart
+        $cartTotalQuantity = $this->findCartTotalQuantityOfUser($userCartItems);
 
-        // return the data to the view
-        return view('cart', [
-            'numItemsInUserCart' => $userCartItems->count(),
-            'cartTotalPrice' => $cartTotalPrice
+        return response()->json([
+            'cartTotalQuantity' => $cartTotalQuantity
         ]);
     }
 
@@ -57,15 +55,13 @@ class CartController extends Controller
     // Method that allows the user to add an item to their cart from the menu view
     public function store(Request $request) {
 
-        // 1. Validate given data from cartHandler.js
+        // 1. Make sure it is a valid menu item
         $request->validate([
-            'menuItemId' => 'required|exists:menu_items,id',
-            'quantityToAdd' => 'required|integer|min:1|max:1'
+            'menuItemId' => 'required|exists:menu_items,id'
         ]);
 
         // 2. Get the data from the body of the request in cartHandler.js addToCart method
         $menuItemId = $request->input('menuItemId');
-        $quantityToAdd = $request->input('quantityToAdd');
         $userId = auth()->id();
 
         // 3. Check if the item already exists in the users cart. 
@@ -75,19 +71,18 @@ class CartController extends Controller
 
         if ($existingCartItem) {
             // If the cart item exists then we want to update the quantity
-            $existingCartItem->quantity += $quantityToAdd;
+            $existingCartItem->quantity += 1;
             $existingCartItem->save();
         } else {
             // Otherwise we can create the new cart item
             CartItem::create([
                 'user_id' => $userId,
                 'menu_item_id' => $menuItemId,
-                'quantity' => $quantityToAdd
+                'quantity' => 1
             ]);
         }
 
         // return the total quantity of the users cart
-        // return $this->getQuantity();
         return $this->updateCart();
     }
 
@@ -110,16 +105,6 @@ class CartController extends Controller
     }
 
     // Private helper methods below this line -----
-
-    private function getQuantity() {
-        $userCartItems = CartItem::where('user_id', auth()->id())->get();
-
-        $totalCartQuantity = $this->findCartTotalQuantityOfUser($userCartItems);
-
-        return response()->json([
-            'quantity' => $totalCartQuantity
-        ]);
-    }
 
     private function findCartTotalQuantityOfUser($userCartItems) {
         return $userCartItems->sum('quantity');
