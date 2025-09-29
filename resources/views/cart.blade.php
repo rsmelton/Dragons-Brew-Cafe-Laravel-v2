@@ -22,37 +22,6 @@ which is inside my cartHandler.js file --}}
 
         {{-- Otherwise we render out the users cart --}}
         <template x-if="$store.cart.cartTotalQuantity > 0">
-            {{-- <div class="overflow-x-auto sm:overflow-x-visible">
-                <table class="min-w-full border border-gray-200 divide-y divide-gray-200">
-                    <thead class="bg-gray-100">
-                        <tr>
-                            <th class="px-4 py-2 text-left text-sm font-medium text-gray-700 whitespace-nowrap">Name</th>
-                            <th class="px-4 py-2 text-left text-sm font-medium text-gray-700 whitespace-nowrap">Email</th>
-                            <th class="px-4 py-2 text-left text-sm font-medium text-gray-700 whitespace-nowrap">Role</th>
-                            <th class="px-4 py-2 text-left text-sm font-medium text-gray-700 whitespace-nowrap">Status</th>
-                            <th class="px-4 py-2 text-left text-sm font-medium text-gray-700 whitespace-nowrap">Created At</th>
-                        </tr>
-                    </thead>
-                    <tbody class="bg-white divide-y divide-gray-200">
-                        <tr>
-                            <td class="px-4 py-2 whitespace-nowrap">John Doe</td>
-                            <td class="px-4 py-2 whitespace-nowrap">john@example.com</td>
-                            <td class="px-4 py-2 whitespace-nowrap">Admin</td>
-                            <td class="px-4 py-2 whitespace-nowrap">Active</td>
-                            <td class="px-4 py-2 whitespace-nowrap">2025-09-26</td>
-                        </tr>
-                        <tr>
-                            <td class="px-4 py-2 whitespace-nowrap">Jane Smith</td>
-                            <td class="px-4 py-2 whitespace-nowrap">jane@example.com</td>
-                            <td class="px-4 py-2 whitespace-nowrap">User</td>
-                            <td class="px-4 py-2 whitespace-nowrap">Inactive</td>
-                            <td class="px-4 py-2 whitespace-nowrap">2025-09-20</td>
-                        </tr>
-                    <!-- more rows -->
-                    </tbody>
-                </table>
-            </div> --}}
-
             <div class="overflow-x-auto sm:overflow-x-visible">
                 <table class="min-w-full divide-y divide-gray-200 text-sm text-left">
                     <thead class="bg-gray-100 text-gray-600 uppercase text-xs">
@@ -89,7 +58,6 @@ which is inside my cartHandler.js file --}}
                                         <button @click="$store.cart.incrementQuantity(cartItem.id)" class="bg-green-400 text-blue-800 px-2 py-1 rounded text-xs whitespace-nowrap">
                                             <img class="w-8 h-auto min-w-8" src="/images/plus-icon.png" alt="Increase quantity from cart button">
                                         </button>
-                                        {{-- <span x-text="cartItem.quantity" class="text-black px-4 py-1 rounded text-xl"></span> --}}
                                     </div>
                                 </td>
                                 <td x-text="cartItem.menuItem.name" class="px-6 py-4 font-medium text-gray-800 whitespace-nowrap"></td>
